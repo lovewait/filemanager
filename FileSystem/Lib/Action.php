@@ -7,6 +7,7 @@ class Action{
     private $_data;
     protected $content;
     public function __construct(){
+        header('Content-type:text/html;charset=UTF-8');
         $this->action_name = 'index';
         $this->model_name = 'index';
         $this->tpl_name = 'index';
@@ -20,21 +21,8 @@ class Action{
     }
     public function display(){
         ob_start();
-        if(preg_match_all('/(<\?php\s(.*?)\?>?)/s',$this->content,$match)){
-            $find = $match[1];
-            $_replace = array();
-            foreach($match[2] as $_match){
-                eval($_match);
-                $_replace[] = ob_get_contents();
-                ob_clean();
-            }
-            ob_flush();
-            str_replace($find,$_replace,$this->content,$i);
-        }
-        header('Content-type:text/html;charset=UTF-8');
-        var_dump($this->content);
-        var_dump($match[1]);
-        var_dump($i);
-        ob_end_flush();
+        eval('?>' . $this->content);
+        $this->content = ob_get_clean();
+        echo $this->content;
     }
 }

@@ -3,15 +3,33 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="<?php echo CSS_PATH.'/';?>index.css"/>
 </head>
 <body>
-<?php
-foreach($data as $key => $value){
-    echo $value;
-}
-?>
-<?php
-var_dump($data);
-?>
+<table>
+    <tr>
+        <td>编号</td>
+        <td>文件名</td>
+        <td>大小</td>
+        <td>操作</td>
+    </tr>
+    <?php
+    foreach($file_list as $i => $file){
+    ?>
+    <tr>
+        <td><?php echo $i;?></td>
+        <td><img src="<?php echo IMAGE_PATH.'/'.$file['type'];?>.jpg"/><?php echo $file['name'];?></td>
+        <td><?php echo $file['size'];?></td>
+        <td>
+            <a href="?action=Index&method=index">剪切</a>
+            <a href="?action=Index&method=index">复制</a>
+            <a href="?action=Index&method=deletefile&id=<?php echo $i;?>">删除</a>
+            <a href="?action=Index&method=index">重命名</a>
+        </td>
+    </tr>
+    <?php
+    }
+    ?>
+</table>
 </body>
 </html>
